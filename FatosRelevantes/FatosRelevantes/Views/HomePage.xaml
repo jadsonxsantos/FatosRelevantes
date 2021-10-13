@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FatosRelevantes.Views.HomePage"
+             xmlns:pancake="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             Title="FATOS RELEVANTES">
+    <!--BIBLIOTECA DE CORES-->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="CorStatusBar">#1f4f4c</Color>
+            <Color x:Key="CorSeparador">#247773</Color>
+            <Color x:Key="CorData">#25a29d</Color>
+            <Color x:Key="CorTitulo">#000000</Color>
+            <Color x:Key="CorDescricao">#162928</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <!--LISTA COM OS FATOS RELEVANTES-->
+        <ListView x:Name="Lv_FatosRelevantes"       
+                  BackgroundColor="White" HasUnevenRows="true" Refreshing="Lv_FatosRelevantes_Refreshing"                   
+                  VerticalOptions="FillAndExpand" CachingStrategy="RecycleElement"                   
+                  SeparatorColor="{StaticResource CorSeparador}" ItemTapped="Lv_FatosRelevantes_ItemTapped"
+                  Margin="0,-5,0,5" IsPullToRefreshEnabled="True">
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Spacing="10" BackgroundColor="White" Margin="0,0,0,1">
+                            <BoxView Margin="3" HeightRequest="1" WidthRequest="5.5" Color="{StaticResource CorSeparador}" />
+
+                            <Grid  VerticalOptions="FillAndExpand" Margin="0,-20,0,0" HorizontalOptions="FillAndExpand" BackgroundColor="White">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="90"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="90"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Label FontAttributes="Bold" Text="{Binding Empresa}"  TextColor="{StaticResource CorTitulo}" VerticalTextAlignment="Center" Margin="0,0,0,0" />
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding Descricao}" VerticalTextAlignment="Start" FontSize="Small" TextColor="{StaticResource CorDescricao}" Margin="0,-35" />
+                                <StackLayout Grid.Row="0"  Grid.Column="1" BackgroundColor="Transparent" Orientation="Vertical">
+                                    <Label Text="{Binding DataPublicacao, StringFormat='{0:dd}'}" 
+                                               HorizontalTextAlignment="Center" Margin="5,20,0,0" FontAttributes="Bold" 
+                                               TextColor="{StaticResource CorSeparador}" HorizontalOptions="Center" VerticalTextAlignment="Center" 
+                                               FontSize="25" />
+
+                                    <ContentView x:Name="FundoOpenOrClose" 
+                                                 BackgroundColor="{StaticResource CorSeparador}">
+
+                                        <Label Text="{Binding DataPublicacao, StringFormat='{0: MMM , yyyy}'}" 
+                                                   HorizontalTextAlignment="Center" Margin="5,0,5,0" 
+                                                   FontAttributes="Bold" TextColor="White" VerticalTextAlignment="Center" 
+                                                   FontSize="Micro" />
+
+                                    </ContentView>
+                                </StackLayout>
+
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <!--POPUP DE DOAÇÃO-->
+        <pancake:PancakeView VerticalOptions="EndAndExpand" BackgroundColor="#25a29d"
+                    Margin="30,10,30,10" x:Name="Pc_Tapped"
+                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="50" CornerRadius="25"                   
+                    Padding="20,0">
+            <pancake:PancakeView.GestureRecognizers>
+                <TapGestureRecognizer  />
+            </pancake:PancakeView.GestureRecognizers>
+            <Label TextColor="WHITE" FontSize="12"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span FontAttributes="Bold" Text="💰 FAÇA UMA DOAÇÃO 💰 &#10;"/>
+                        <Span Text="Ajude a Manter o App Sem Anúncios!"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </pancake:PancakeView>
+    </Grid>
+</ContentPage>
